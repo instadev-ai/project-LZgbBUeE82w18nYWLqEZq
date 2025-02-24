@@ -10,16 +10,7 @@ import {
   Target,
   User,
 } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 
 interface MainLayoutProps {
   children: React.ReactNode;
@@ -42,117 +33,94 @@ const MainLayout = ({ children }: MainLayoutProps) => {
   ];
 
   return (
-    <div className="flex min-h-screen bg-white">
+    <div className="min-h-screen">
       {/* Sidebar */}
-      <div className="fixed inset-y-0 z-50 flex w-64 flex-col">
-        {/* Logo */}
-        <div className="border-b px-6 py-4">
-          <div className="flex items-center gap-2">
-            <div className="h-6 w-6 rounded-full bg-gradient-to-br from-blue-500 to-purple-500" />
-            <span className="font-semibold">GoalTracker</span>
-          </div>
+      <aside className="fixed left-0 top-0 z-20 flex h-full w-[270px] flex-col border-r bg-white">
+        <div className="flex h-[60px] items-center gap-2 border-b px-6">
+          <div className="h-6 w-6 rounded-full bg-gradient-to-br from-blue-500 to-purple-500" />
+          <span className="font-semibold">GoalTracker</span>
         </div>
 
         {/* Navigation */}
-        <div className="flex-1 overflow-y-auto border-r bg-white">
-          <nav className="flex flex-1 flex-col px-4 py-4">
-            <div className="space-y-1">
-              {navigation.map((item) => {
-                const Icon = item.icon;
-                return (
-                  <Link
-                    key={item.name}
-                    to={item.href}
-                    className={cn(
-                      "group flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium",
-                      location.pathname === item.href
-                        ? "bg-gray-100 text-gray-900"
-                        : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"
-                    )}
-                  >
-                    <Icon className="h-5 w-5" />
-                    {item.name}
-                  </Link>
-                );
-              })}
-            </div>
-
-            <div className="my-6 border-t" />
-
-            <div className="space-y-1">
-              {secondaryNavigation.map((item) => {
-                const Icon = item.icon;
-                return (
-                  <Link
-                    key={item.name}
-                    to={item.href}
-                    className={cn(
-                      "group flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium",
-                      location.pathname === item.href
-                        ? "bg-gray-100 text-gray-900"
-                        : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"
-                    )}
-                  >
-                    <Icon className="h-5 w-5" />
-                    {item.name}
-                  </Link>
-                );
-              })}
-            </div>
-          </nav>
-        </div>
-
-        {/* User */}
-        <div className="border-t border-r bg-white p-4">
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button
-                variant="ghost"
-                className="h-auto w-full justify-start gap-2 px-2 py-1.5"
+        <nav className="flex-1 space-y-1 p-4">
+          {navigation.map((item) => {
+            const Icon = item.icon;
+            const isActive = location.pathname === item.href;
+            return (
+              <Link
+                key={item.name}
+                to={item.href}
+                className={cn(
+                  "flex h-[38px] items-center gap-2 rounded-md px-3 text-[14px] font-medium transition-colors",
+                  isActive
+                    ? "bg-[#F5F5F5] text-black"
+                    : "text-[#666666] hover:bg-[#FAFAFA]"
+                )}
               >
-                <Avatar className="h-8 w-8">
-                  <AvatarImage src="" />
-                  <AvatarFallback>JD</AvatarFallback>
-                </Avatar>
-                <div className="flex flex-col items-start text-sm">
-                  <span className="font-medium">John Doe</span>
-                  <span className="text-xs text-gray-500">john@example.com</span>
-                </div>
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="w-56">
-              <DropdownMenuLabel>My Account</DropdownMenuLabel>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem>Profile</DropdownMenuItem>
-              <DropdownMenuItem>Settings</DropdownMenuItem>
-              <DropdownMenuItem>Help</DropdownMenuItem>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem>Log out</DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
+                <Icon className="h-4 w-4" />
+                {item.name}
+              </Link>
+            );
+          })}
+
+          <div className="my-4 border-t" />
+
+          {secondaryNavigation.map((item) => {
+            const Icon = item.icon;
+            const isActive = location.pathname === item.href;
+            return (
+              <Link
+                key={item.name}
+                to={item.href}
+                className={cn(
+                  "flex h-[38px] items-center gap-2 rounded-md px-3 text-[14px] font-medium transition-colors",
+                  isActive
+                    ? "bg-[#F5F5F5] text-black"
+                    : "text-[#666666] hover:bg-[#FAFAFA]"
+                )}
+              >
+                <Icon className="h-4 w-4" />
+                {item.name}
+              </Link>
+            );
+          })}
+        </nav>
+
+        {/* User Profile */}
+        <div className="border-t p-4">
+          <div className="flex items-center gap-2 rounded-md px-2 py-2 hover:bg-[#FAFAFA]">
+            <Avatar className="h-8 w-8">
+              <AvatarImage src="" />
+              <AvatarFallback>JD</AvatarFallback>
+            </Avatar>
+            <div className="flex flex-col">
+              <span className="text-sm font-medium">John Doe</span>
+              <span className="text-xs text-gray-500">john@example.com</span>
+            </div>
+          </div>
         </div>
-      </div>
+      </aside>
 
       {/* Main Content */}
-      <div className="flex-1 pl-64">
-        {/* Top bar */}
-        <header className="sticky top-0 z-40 border-b bg-white">
-          <div className="flex h-16 items-center justify-between px-6">
-            <div className="text-xl font-semibold">
-              {navigation.find((item) => item.href === location.pathname)?.name ||
-                "Dashboard"}
-            </div>
-            <div className="flex items-center gap-4">
-              <Button variant="ghost" size="icon">
-                <Bell className="h-5 w-5" />
-              </Button>
-            </div>
+      <main className="ml-[270px]">
+        {/* Top Navigation */}
+        <header className="flex h-[60px] items-center justify-between border-b bg-white px-6">
+          <h1 className="text-xl font-semibold">
+            {navigation.find((item) => item.href === location.pathname)?.name ||
+              "Dashboard"}
+          </h1>
+          <div className="flex items-center gap-4">
+            <button className="rounded-full p-2 hover:bg-gray-100">
+              <Bell className="h-5 w-5 text-gray-600" />
+            </button>
           </div>
         </header>
 
-        {/* Page content */}
-        <main className="flex-1 bg-gray-50">{children}</main>
-      </div>
+        {/* Page Content */}
+        <div className="min-h-[calc(100vh-60px)] bg-[#FAFAFA]">
+          {children}
+        </div>
+      </main>
     </div>
   );
 };
