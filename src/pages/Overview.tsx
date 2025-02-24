@@ -95,15 +95,15 @@ const Overview = () => {
   ];
 
   return (
-    <div className="space-y-8 p-8">
+    <div className="flex min-h-screen flex-col gap-6 p-6">
       {/* Quick Actions */}
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-3xl font-bold">Welcome back, John</h2>
+          <h2 className="text-2xl font-bold">Welcome back, John</h2>
           <p className="text-gray-500">Track your progress and achieve your goals</p>
         </div>
         <Button onClick={() => navigate("/goals")} size="lg">
-          <Target className="mr-2 h-5 w-5" />
+          <Target className="mr-2 h-4 w-4" />
           New Goal
         </Button>
       </div>
@@ -135,10 +135,10 @@ const Overview = () => {
         {/* Recent Activity */}
         <Card className="md:col-span-4">
           <CardHeader>
-            <CardTitle className="text-lg font-medium">Recent Activity</CardTitle>
+            <CardTitle>Recent Activity</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="space-y-6">
+            <div className="space-y-4">
               {recentActivity.map((activity) => {
                 const Icon = activity.icon;
                 return (
@@ -170,10 +170,10 @@ const Overview = () => {
         {/* Upcoming Tasks */}
         <Card className="md:col-span-3">
           <CardHeader>
-            <CardTitle className="text-lg font-medium">Coming Up</CardTitle>
+            <CardTitle>Coming Up</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="space-y-6">
+            <div className="space-y-4">
               {upcomingTasks.map((task) => (
                 <div
                   key={task.id}
@@ -197,10 +197,10 @@ const Overview = () => {
         </Card>
       </div>
 
-      {/* Quick Stats */}
+      {/* Weekly Progress */}
       <Card>
         <CardHeader>
-          <CardTitle className="text-lg font-medium">Weekly Progress</CardTitle>
+          <CardTitle>Weekly Progress</CardTitle>
         </CardHeader>
         <CardContent>
           <div className="flex items-center gap-8">

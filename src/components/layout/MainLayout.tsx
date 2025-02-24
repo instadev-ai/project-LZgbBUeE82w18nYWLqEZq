@@ -117,7 +117,7 @@ const MainLayout = ({ children }: MainLayoutProps) => {
         </header>
 
         {/* Page Content */}
-        <div className="min-h-[calc(100vh-60px)] bg-[#FAFAFA]">
+        <div className="min-h-[calc(100vh-60px)]">
           {children}
         </div>
       </main>
