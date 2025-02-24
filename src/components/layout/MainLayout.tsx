@@ -11,6 +11,7 @@ import {
   User,
 } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Sidebar } from "@/components/ui/sidebar";
 
 interface MainLayoutProps {
   children: React.ReactNode;
@@ -33,15 +34,12 @@ const MainLayout = ({ children }: MainLayoutProps) => {
   ];
 
   return (
-    <div className="flex min-h-screen">
-      {/* Sidebar */}
-      <div className="w-[270px] flex-none border-r bg-background">
+    <div className="relative flex min-h-screen">
+      <Sidebar className="border-r">
         <div className="flex h-[60px] items-center gap-2 border-b px-6">
           <div className="h-6 w-6 rounded-full bg-gradient-to-br from-blue-500 to-purple-500" />
           <span className="font-semibold">GoalTracker</span>
         </div>
-
-        {/* Navigation */}
         <div className="flex flex-col gap-4 p-4">
           <nav className="flex flex-col gap-1">
             {navigation.map((item) => {
@@ -52,7 +50,7 @@ const MainLayout = ({ children }: MainLayoutProps) => {
                   key={item.name}
                   to={item.href}
                   className={cn(
-                    "flex h-[38px] items-center gap-2 rounded-md px-3 text-[14px] font-medium transition-colors",
+                    "flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium transition-colors",
                     isActive
                       ? "bg-secondary text-secondary-foreground"
                       : "text-muted-foreground hover:bg-secondary hover:text-secondary-foreground"
@@ -76,7 +74,7 @@ const MainLayout = ({ children }: MainLayoutProps) => {
                   key={item.name}
                   to={item.href}
                   className={cn(
-                    "flex h-[38px] items-center gap-2 rounded-md px-3 text-[14px] font-medium transition-colors",
+                    "flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium transition-colors",
                     isActive
                       ? "bg-secondary text-secondary-foreground"
                       : "text-muted-foreground hover:bg-secondary hover:text-secondary-foreground"
@@ -90,7 +88,6 @@ const MainLayout = ({ children }: MainLayoutProps) => {
           </nav>
         </div>
 
-        {/* User Profile */}
         <div className="mt-auto border-t p-4">
           <div className="flex items-center gap-2 rounded-md px-2 py-2 hover:bg-secondary">
             <Avatar className="h-8 w-8">
@@ -103,12 +100,9 @@ const MainLayout = ({ children }: MainLayoutProps) => {
             </div>
           </div>
         </div>
-      </div>
-
-      {/* Main Content */}
-      <div className="flex flex-1 flex-col">
-        {/* Top Navigation */}
-        <header className="flex h-[60px] items-center justify-between border-b bg-background px-6">
+      </Sidebar>
+      <div className="flex-1">
+        <header className="flex h-[60px] items-center justify-between border-b px-6">
           <h1 className="text-xl font-semibold">
             {navigation.find((item) => item.href === location.pathname)?.name ||
               "Dashboard"}
@@ -119,9 +113,7 @@ const MainLayout = ({ children }: MainLayoutProps) => {
             </button>
           </div>
         </header>
-
-        {/* Page Content */}
-        <div className="flex-1">{children}</div>
+        <main className="flex-1">{children}</main>
       </div>
     </div>
   );
