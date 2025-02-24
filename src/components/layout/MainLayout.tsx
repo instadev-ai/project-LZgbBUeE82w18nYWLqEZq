@@ -33,94 +33,96 @@ const MainLayout = ({ children }: MainLayoutProps) => {
   ];
 
   return (
-    <div className="min-h-screen">
+    <div className="flex min-h-screen">
       {/* Sidebar */}
-      <aside className="fixed left-0 top-0 z-20 flex h-full w-[270px] flex-col border-r bg-white">
+      <div className="w-[270px] flex-none border-r bg-background">
         <div className="flex h-[60px] items-center gap-2 border-b px-6">
           <div className="h-6 w-6 rounded-full bg-gradient-to-br from-blue-500 to-purple-500" />
           <span className="font-semibold">GoalTracker</span>
         </div>
 
         {/* Navigation */}
-        <nav className="flex-1 space-y-1 p-4">
-          {navigation.map((item) => {
-            const Icon = item.icon;
-            const isActive = location.pathname === item.href;
-            return (
-              <Link
-                key={item.name}
-                to={item.href}
-                className={cn(
-                  "flex h-[38px] items-center gap-2 rounded-md px-3 text-[14px] font-medium transition-colors",
-                  isActive
-                    ? "bg-[#F5F5F5] text-black"
-                    : "text-[#666666] hover:bg-[#FAFAFA]"
-                )}
-              >
-                <Icon className="h-4 w-4" />
-                {item.name}
-              </Link>
-            );
-          })}
+        <div className="flex flex-col gap-4 p-4">
+          <nav className="flex flex-col gap-1">
+            {navigation.map((item) => {
+              const Icon = item.icon;
+              const isActive = location.pathname === item.href;
+              return (
+                <Link
+                  key={item.name}
+                  to={item.href}
+                  className={cn(
+                    "flex h-[38px] items-center gap-2 rounded-md px-3 text-[14px] font-medium transition-colors",
+                    isActive
+                      ? "bg-secondary text-secondary-foreground"
+                      : "text-muted-foreground hover:bg-secondary hover:text-secondary-foreground"
+                  )}
+                >
+                  <Icon className="h-4 w-4" />
+                  {item.name}
+                </Link>
+              );
+            })}
+          </nav>
 
-          <div className="my-4 border-t" />
+          <div className="border-t" />
 
-          {secondaryNavigation.map((item) => {
-            const Icon = item.icon;
-            const isActive = location.pathname === item.href;
-            return (
-              <Link
-                key={item.name}
-                to={item.href}
-                className={cn(
-                  "flex h-[38px] items-center gap-2 rounded-md px-3 text-[14px] font-medium transition-colors",
-                  isActive
-                    ? "bg-[#F5F5F5] text-black"
-                    : "text-[#666666] hover:bg-[#FAFAFA]"
-                )}
-              >
-                <Icon className="h-4 w-4" />
-                {item.name}
-              </Link>
-            );
-          })}
-        </nav>
+          <nav className="flex flex-col gap-1">
+            {secondaryNavigation.map((item) => {
+              const Icon = item.icon;
+              const isActive = location.pathname === item.href;
+              return (
+                <Link
+                  key={item.name}
+                  to={item.href}
+                  className={cn(
+                    "flex h-[38px] items-center gap-2 rounded-md px-3 text-[14px] font-medium transition-colors",
+                    isActive
+                      ? "bg-secondary text-secondary-foreground"
+                      : "text-muted-foreground hover:bg-secondary hover:text-secondary-foreground"
+                  )}
+                >
+                  <Icon className="h-4 w-4" />
+                  {item.name}
+                </Link>
+              );
+            })}
+          </nav>
+        </div>
 
         {/* User Profile */}
-        <div className="border-t p-4">
-          <div className="flex items-center gap-2 rounded-md px-2 py-2 hover:bg-[#FAFAFA]">
+        <div className="mt-auto border-t p-4">
+          <div className="flex items-center gap-2 rounded-md px-2 py-2 hover:bg-secondary">
             <Avatar className="h-8 w-8">
               <AvatarImage src="" />
               <AvatarFallback>JD</AvatarFallback>
             </Avatar>
             <div className="flex flex-col">
               <span className="text-sm font-medium">John Doe</span>
-              <span className="text-xs text-gray-500">john@example.com</span>
+              <span className="text-xs text-muted-foreground">john@example.com</span>
             </div>
           </div>
         </div>
-      </aside>
+      </div>
 
       {/* Main Content */}
-      <main className="ml-[270px]">
+      <div className="flex flex-1 flex-col">
         {/* Top Navigation */}
-        <header className="flex h-[60px] items-center justify-between border-b bg-white px-6">
+        <header className="flex h-[60px] items-center justify-between border-b bg-background px-6">
           <h1 className="text-xl font-semibold">
             {navigation.find((item) => item.href === location.pathname)?.name ||
               "Dashboard"}
           </h1>
           <div className="flex items-center gap-4">
-            <button className="rounded-full p-2 hover:bg-gray-100">
-              <Bell className="h-5 w-5 text-gray-600" />
+            <button className="rounded-full p-2 hover:bg-secondary">
+              <Bell className="h-5 w-5 text-muted-foreground" />
             </button>
           </div>
         </header>
 
         {/* Page Content */}
-        <div className="min-h-[calc(100vh-60px)]">
-          {children}
-        </div>
-      </main>
+        <div className="flex-1">{children}</div>
+      </div>
     </div>
   );
 };
