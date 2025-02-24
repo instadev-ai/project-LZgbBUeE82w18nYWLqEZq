@@ -10,24 +10,41 @@ import { Progress } from "@/components/ui/progress";
 
 const Index = () => {
   const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
-
-  // Temporary mock data for demonstration
-  const goals = [
+  const [goals, setGoals] = useState([
     {
       id: 1,
       title: "Learn Spanish",
-      category: "Education",
+      category: "education",
       progress: 45,
       dueDate: "2024-06-30",
+      description: "Achieve conversational fluency in Spanish",
     },
     {
       id: 2,
       title: "Run a Marathon",
-      category: "Health",
+      category: "health",
       progress: 30,
       dueDate: "2024-12-31",
+      description: "Complete a full marathon",
     },
-  ];
+  ]);
+
+  const handleGoalCreate = (newGoal: any) => {
+    setGoals((prevGoals) => [...prevGoals, newGoal]);
+  };
+
+  const getCategoryLabel = (category: string) => {
+    const categories: { [key: string]: string } = {
+      health: "Health & Fitness",
+      career: "Career & Work",
+      education: "Education",
+      finance: "Finance",
+      personal: "Personal Development",
+      relationships: "Relationships",
+      other: "Other",
+    };
+    return categories[category] || category;
+  };
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -59,7 +76,7 @@ const Index = () => {
                     <div className="flex items-start justify-between">
                       <div>
                         <CardTitle className="text-lg font-semibold">{goal.title}</CardTitle>
-                        <p className="text-sm text-gray-500">{goal.category}</p>
+                        <p className="text-sm text-gray-500">{getCategoryLabel(goal.category)}</p>
                       </div>
                       <span className="rounded-full bg-blue-100 px-2 py-1 text-xs font-medium text-blue-800">
                         {goal.progress}%
@@ -68,6 +85,7 @@ const Index = () => {
                   </CardHeader>
                   <CardContent>
                     <Progress value={goal.progress} className="h-2" />
+                    <p className="mt-2 text-sm text-gray-600 line-clamp-2">{goal.description}</p>
                     <p className="mt-2 text-xs text-gray-500">
                       Due: {new Date(goal.dueDate).toLocaleDateString()}
                     </p>
@@ -86,10 +104,10 @@ const Index = () => {
           </TabsContent>
         </Tabs>
 
-        {/* Goal Creation Dialog */}
         <GoalCreationDialog
           open={isCreateDialogOpen}
           onOpenChange={setIsCreateDialogOpen}
+          onGoalCreate={handleGoalCreate}
         />
       </div>
     </div>
