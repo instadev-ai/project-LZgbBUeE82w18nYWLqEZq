@@ -6,7 +6,6 @@ import {
   Bell,
   Calendar,
   Home,
-  LayoutDashboard,
   Settings2,
   Target,
   User,
@@ -43,11 +42,11 @@ const MainLayout = ({ children }: MainLayoutProps) => {
   ];
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="flex min-h-screen bg-white">
       {/* Sidebar */}
-      <div className="fixed inset-y-0 z-50 flex w-64 flex-col border-r bg-white">
+      <div className="fixed inset-y-0 z-50 flex w-64 flex-col">
         {/* Logo */}
-        <div className="border-b px-4 py-4">
+        <div className="border-b px-6 py-4">
           <div className="flex items-center gap-2">
             <div className="h-6 w-6 rounded-full bg-gradient-to-br from-blue-500 to-purple-500" />
             <span className="font-semibold">GoalTracker</span>
@@ -55,50 +54,56 @@ const MainLayout = ({ children }: MainLayoutProps) => {
         </div>
 
         {/* Navigation */}
-        <nav className="flex-1 space-y-1 px-2 py-4">
-          {navigation.map((item) => {
-            const Icon = item.icon;
-            return (
-              <Link
-                key={item.name}
-                to={item.href}
-                className={cn(
-                  "group flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium",
-                  location.pathname === item.href
-                    ? "bg-gray-100 text-gray-900"
-                    : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"
-                )}
-              >
-                <Icon className="h-5 w-5" />
-                {item.name}
-              </Link>
-            );
-          })}
+        <div className="flex-1 overflow-y-auto border-r bg-white">
+          <nav className="flex flex-1 flex-col px-4 py-4">
+            <div className="space-y-1">
+              {navigation.map((item) => {
+                const Icon = item.icon;
+                return (
+                  <Link
+                    key={item.name}
+                    to={item.href}
+                    className={cn(
+                      "group flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium",
+                      location.pathname === item.href
+                        ? "bg-gray-100 text-gray-900"
+                        : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"
+                    )}
+                  >
+                    <Icon className="h-5 w-5" />
+                    {item.name}
+                  </Link>
+                );
+              })}
+            </div>
 
-          <div className="my-6 border-t" />
+            <div className="my-6 border-t" />
 
-          {secondaryNavigation.map((item) => {
-            const Icon = item.icon;
-            return (
-              <Link
-                key={item.name}
-                to={item.href}
-                className={cn(
-                  "group flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium",
-                  location.pathname === item.href
-                    ? "bg-gray-100 text-gray-900"
-                    : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"
-                )}
-              >
-                <Icon className="h-5 w-5" />
-                {item.name}
-              </Link>
-            );
-          })}
-        </nav>
+            <div className="space-y-1">
+              {secondaryNavigation.map((item) => {
+                const Icon = item.icon;
+                return (
+                  <Link
+                    key={item.name}
+                    to={item.href}
+                    className={cn(
+                      "group flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium",
+                      location.pathname === item.href
+                        ? "bg-gray-100 text-gray-900"
+                        : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"
+                    )}
+                  >
+                    <Icon className="h-5 w-5" />
+                    {item.name}
+                  </Link>
+                );
+              })}
+            </div>
+          </nav>
+        </div>
 
         {/* User */}
-        <div className="border-t p-4">
+        <div className="border-t border-r bg-white p-4">
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button
@@ -129,10 +134,10 @@ const MainLayout = ({ children }: MainLayoutProps) => {
       </div>
 
       {/* Main Content */}
-      <div className="pl-64">
+      <div className="flex-1 pl-64">
         {/* Top bar */}
-        <header className="border-b">
-          <div className="flex h-16 items-center justify-between px-4 md:px-6">
+        <header className="sticky top-0 z-40 border-b bg-white">
+          <div className="flex h-16 items-center justify-between px-6">
             <div className="text-xl font-semibold">
               {navigation.find((item) => item.href === location.pathname)?.name ||
                 "Dashboard"}
@@ -146,7 +151,7 @@ const MainLayout = ({ children }: MainLayoutProps) => {
         </header>
 
         {/* Page content */}
-        <main className="min-h-[calc(100vh-4rem)]">{children}</main>
+        <main className="flex-1 bg-gray-50">{children}</main>
       </div>
     </div>
   );
